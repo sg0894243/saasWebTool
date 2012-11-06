@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditProjectsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_projectId}" for="projectId" />
+                    <h:inputText id="projectId" value="#{projectsController.selected.projectId}" title="#{bundle.EditProjectsTitle_projectId}" required="true" requiredMessage="#{bundle.EditProjectsRequiredMessage_projectId}"/>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_type}" for="type" />
+                    <h:inputText id="type" value="#{projectsController.selected.type}" title="#{bundle.EditProjectsTitle_type}" required="true" requiredMessage="#{bundle.EditProjectsRequiredMessage_type}"/>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_env}" for="env" />
+                    <h:inputText id="env" value="#{projectsController.selected.env}" title="#{bundle.EditProjectsTitle_env}" required="true" requiredMessage="#{bundle.EditProjectsRequiredMessage_env}"/>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_parentSR}" for="parentSR" />
+                    <h:inputText id="parentSR" value="#{projectsController.selected.parentSR}" title="#{bundle.EditProjectsTitle_parentSR}" />
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_envReadyDate}" for="envReadyDate" />
+                    <h:inputText id="envReadyDate" value="#{projectsController.selected.envReadyDate}" title="#{bundle.EditProjectsTitle_envReadyDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_cutoverDate}" for="cutoverDate" />
+                    <h:inputText id="cutoverDate" value="#{projectsController.selected.cutoverDate}" title="#{bundle.EditProjectsTitle_cutoverDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_status}" for="status" />
+                    <h:inputText id="status" value="#{projectsController.selected.status}" title="#{bundle.EditProjectsTitle_status}" />
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_projectscol}" for="projectscol" />
+                    <h:inputText id="projectscol" value="#{projectsController.selected.projectscol}" title="#{bundle.EditProjectsTitle_projectscol}" />
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_primaryArchitect}" for="primaryArchitect" />
+                    <h:selectOneMenu id="primaryArchitect" value="#{projectsController.selected.primaryArchitect}" title="#{bundle.EditProjectsTitle_primaryArchitect}" >
+                        <f:selectItems value="#{peopleController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_primaryPM}" for="primaryPM" />
+                    <h:selectOneMenu id="primaryPM" value="#{projectsController.selected.primaryPM}" title="#{bundle.EditProjectsTitle_primaryPM}" >
+                        <f:selectItems value="#{peopleController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_customer}" for="customer" />
+                    <h:selectOneMenu id="customer" value="#{projectsController.selected.customer}" title="#{bundle.EditProjectsTitle_customer}" required="true" requiredMessage="#{bundle.EditProjectsRequiredMessage_customer}">
+                        <f:selectItems value="#{customersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditProjectsLabel_product}" for="product" />
+                    <h:selectOneMenu id="product" value="#{projectsController.selected.product}" title="#{bundle.EditProjectsTitle_product}" required="true" requiredMessage="#{bundle.EditProjectsRequiredMessage_product}">
+                        <f:selectItems value="#{productsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{projectsController.update}" value="#{bundle.EditProjectsSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditProjectsViewLink}"/>
+                <br />
+                <h:commandLink action="#{projectsController.prepareList}" value="#{bundle.EditProjectsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditProjectsIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

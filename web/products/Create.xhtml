@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateProductsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateProductsLabel_idProduct}" for="idProduct" />
+                    <h:inputText id="idProduct" value="#{productsController.selected.idProduct}" title="#{bundle.CreateProductsTitle_idProduct}" required="true" requiredMessage="#{bundle.CreateProductsRequiredMessage_idProduct}"/>
+                    <h:outputLabel value="#{bundle.CreateProductsLabel_shortName}" for="shortName" />
+                    <h:inputText id="shortName" value="#{productsController.selected.shortName}" title="#{bundle.CreateProductsTitle_shortName}" required="true" requiredMessage="#{bundle.CreateProductsRequiredMessage_shortName}"/>
+                    <h:outputLabel value="#{bundle.CreateProductsLabel_fullName}" for="fullName" />
+                    <h:inputText id="fullName" value="#{productsController.selected.fullName}" title="#{bundle.CreateProductsTitle_fullName}" />
+                    <h:outputLabel value="#{bundle.CreateProductsLabel_tower}" for="tower" />
+                    <h:inputText id="tower" value="#{productsController.selected.tower}" title="#{bundle.CreateProductsTitle_tower}" />
+                    <h:outputLabel value="#{bundle.CreateProductsLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{productsController.selected.description}" title="#{bundle.CreateProductsTitle_description}" />
+                    <h:outputLabel value="#{bundle.CreateProductsLabel_si}" for="si" />
+                    <h:inputText id="si" value="#{productsController.selected.si}" title="#{bundle.CreateProductsTitle_si}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{productsController.create}" value="#{bundle.CreateProductsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{productsController.prepareList}" value="#{bundle.CreateProductsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateProductsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

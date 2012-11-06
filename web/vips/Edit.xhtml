@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditVipsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditVipsLabel_persistence}" for="persistence" />
+                    <h:inputText id="persistence" value="#{vipsController.selected.persistence}" title="#{bundle.EditVipsTitle_persistence}" />
+                    <h:outputLabel value="#{bundle.EditVipsLabel_IRule}" for="IRule" />
+                    <h:inputText id="IRule" value="#{vipsController.selected.IRule}" title="#{bundle.EditVipsTitle_IRule}" />
+                    <h:outputLabel value="#{bundle.EditVipsLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{vipsController.selected.description}" title="#{bundle.EditVipsTitle_description}" />
+                    <h:outputLabel value="#{bundle.EditVipsLabel_VIPScol}" for="VIPScol" />
+                    <h:inputText id="VIPScol" value="#{vipsController.selected.VIPScol}" title="#{bundle.EditVipsTitle_VIPScol}" />
+                    <h:outputLabel value="#{bundle.EditVipsLabel_components}" for="components" />
+                    <h:selectOneMenu id="components" value="#{vipsController.selected.components}" title="#{bundle.EditVipsTitle_components}" required="true" requiredMessage="#{bundle.EditVipsRequiredMessage_components}">
+                        <f:selectItems value="#{componentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditVipsLabel_bigiphosts}" for="bigiphosts" />
+                    <h:selectOneMenu id="bigiphosts" value="#{vipsController.selected.bigiphosts}" title="#{bundle.EditVipsTitle_bigiphosts}" required="true" requiredMessage="#{bundle.EditVipsRequiredMessage_bigiphosts}">
+                        <f:selectItems value="#{bigiphostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{vipsController.update}" value="#{bundle.EditVipsSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditVipsViewLink}"/>
+                <br />
+                <h:commandLink action="#{vipsController.prepareList}" value="#{bundle.EditVipsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditVipsIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

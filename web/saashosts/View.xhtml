@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSaashostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_hostName}"/>
+                    <h:outputText value="#{saashostsController.selected.hostName}" title="#{bundle.ViewSaashostsTitle_hostName}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_type}"/>
+                    <h:outputText value="#{saashostsController.selected.type}" title="#{bundle.ViewSaashostsTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_dns}"/>
+                    <h:outputText value="#{saashostsController.selected.dns}" title="#{bundle.ViewSaashostsTitle_dns}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_rootIP}"/>
+                    <h:outputText value="#{saashostsController.selected.rootIP}" title="#{bundle.ViewSaashostsTitle_rootIP}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_tier}"/>
+                    <h:outputText value="#{saashostsController.selected.tier}" title="#{bundle.ViewSaashostsTitle_tier}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_env}"/>
+                    <h:outputText value="#{saashostsController.selected.env}" title="#{bundle.ViewSaashostsTitle_env}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_region}"/>
+                    <h:outputText value="#{saashostsController.selected.region}" title="#{bundle.ViewSaashostsTitle_region}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_cpu}"/>
+                    <h:outputText value="#{saashostsController.selected.cpu}" title="#{bundle.ViewSaashostsTitle_cpu}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_ram}"/>
+                    <h:outputText value="#{saashostsController.selected.ram}" title="#{bundle.ViewSaashostsTitle_ram}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_os}"/>
+                    <h:outputText value="#{saashostsController.selected.os}" title="#{bundle.ViewSaashostsTitle_os}"/>
+                    <h:outputText value="#{bundle.ViewSaashostsLabel_buildoutSR}"/>
+                    <h:outputText value="#{saashostsController.selected.buildoutSR}" title="#{bundle.ViewSaashostsTitle_buildoutSR}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{saashostsController.destroyAndView}" value="#{bundle.ViewSaashostsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSaashostsEditLink}"/>
+                <br />
+                <h:commandLink action="#{saashostsController.prepareCreate}" value="#{bundle.ViewSaashostsCreateLink}" />
+                <br />
+                <h:commandLink action="#{saashostsController.prepareList}" value="#{bundle.ViewSaashostsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSaashostsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

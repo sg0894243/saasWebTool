@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSoftwareTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListSoftwareEmpty}" rendered="#{softwareController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{softwareController.items.rowCount > 0}">
+                    <h:outputText value="#{softwareController.pagination.pageFirstItem + 1}..#{softwareController.pagination.pageLastItem + 1}/#{softwareController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{softwareController.previous}" value="#{bundle.Previous} #{softwareController.pagination.pageSize}" rendered="#{softwareController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{softwareController.next}" value="#{bundle.Next} #{softwareController.pagination.pageSize}" rendered="#{softwareController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{softwareController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSoftwareTitle_idSoftware}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idSoftware}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSoftwareTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSoftwareTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSoftwareTitle_version}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.version}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{softwareController.prepareView}" value="#{bundle.ListSoftwareViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{softwareController.prepareEdit}" value="#{bundle.ListSoftwareEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{softwareController.destroy}" value="#{bundle.ListSoftwareDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{softwareController.prepareCreate}" value="#{bundle.ListSoftwareCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListSoftwareIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

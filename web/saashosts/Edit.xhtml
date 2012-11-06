@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditSaashostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_hostName}" for="hostName" />
+                    <h:inputText id="hostName" value="#{saashostsController.selected.hostName}" title="#{bundle.EditSaashostsTitle_hostName}" required="true" requiredMessage="#{bundle.EditSaashostsRequiredMessage_hostName}"/>
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_type}" for="type" />
+                    <h:inputText id="type" value="#{saashostsController.selected.type}" title="#{bundle.EditSaashostsTitle_type}" required="true" requiredMessage="#{bundle.EditSaashostsRequiredMessage_type}"/>
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_dns}" for="dns" />
+                    <h:inputText id="dns" value="#{saashostsController.selected.dns}" title="#{bundle.EditSaashostsTitle_dns}" required="true" requiredMessage="#{bundle.EditSaashostsRequiredMessage_dns}"/>
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_rootIP}" for="rootIP" />
+                    <h:inputText id="rootIP" value="#{saashostsController.selected.rootIP}" title="#{bundle.EditSaashostsTitle_rootIP}" required="true" requiredMessage="#{bundle.EditSaashostsRequiredMessage_rootIP}"/>
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_tier}" for="tier" />
+                    <h:inputText id="tier" value="#{saashostsController.selected.tier}" title="#{bundle.EditSaashostsTitle_tier}" required="true" requiredMessage="#{bundle.EditSaashostsRequiredMessage_tier}"/>
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_env}" for="env" />
+                    <h:inputText id="env" value="#{saashostsController.selected.env}" title="#{bundle.EditSaashostsTitle_env}" required="true" requiredMessage="#{bundle.EditSaashostsRequiredMessage_env}"/>
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_region}" for="region" />
+                    <h:inputText id="region" value="#{saashostsController.selected.region}" title="#{bundle.EditSaashostsTitle_region}" />
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_cpu}" for="cpu" />
+                    <h:inputText id="cpu" value="#{saashostsController.selected.cpu}" title="#{bundle.EditSaashostsTitle_cpu}" />
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_ram}" for="ram" />
+                    <h:inputText id="ram" value="#{saashostsController.selected.ram}" title="#{bundle.EditSaashostsTitle_ram}" />
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_os}" for="os" />
+                    <h:inputText id="os" value="#{saashostsController.selected.os}" title="#{bundle.EditSaashostsTitle_os}" />
+                    <h:outputLabel value="#{bundle.EditSaashostsLabel_buildoutSR}" for="buildoutSR" />
+                    <h:inputText id="buildoutSR" value="#{saashostsController.selected.buildoutSR}" title="#{bundle.EditSaashostsTitle_buildoutSR}" />
+                </h:panelGrid>
+                <h:commandLink action="#{saashostsController.update}" value="#{bundle.EditSaashostsSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditSaashostsViewLink}"/>
+                <br />
+                <h:commandLink action="#{saashostsController.prepareList}" value="#{bundle.EditSaashostsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditSaashostsIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

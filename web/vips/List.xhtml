@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListVipsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListVipsEmpty}" rendered="#{vipsController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{vipsController.items.rowCount > 0}">
+                    <h:outputText value="#{vipsController.pagination.pageFirstItem + 1}..#{vipsController.pagination.pageLastItem + 1}/#{vipsController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{vipsController.previous}" value="#{bundle.Previous} #{vipsController.pagination.pageSize}" rendered="#{vipsController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{vipsController.next}" value="#{bundle.Next} #{vipsController.pagination.pageSize}" rendered="#{vipsController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{vipsController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVipsTitle_persistence}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.persistence}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVipsTitle_IRule}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.IRule}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVipsTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVipsTitle_VIPScol}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.VIPScol}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVipsTitle_components}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.components}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVipsTitle_bigiphosts}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.bigiphosts}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{vipsController.prepareView}" value="#{bundle.ListVipsViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{vipsController.prepareEdit}" value="#{bundle.ListVipsEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{vipsController.destroy}" value="#{bundle.ListVipsDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{vipsController.prepareCreate}" value="#{bundle.ListVipsCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListVipsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateQmanagersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateQmanagersLabel_idComponent}" for="idComponent" />
+                    <h:inputText id="idComponent" value="#{qmanagersController.selected.idComponent}" title="#{bundle.CreateQmanagersTitle_idComponent}" required="true" requiredMessage="#{bundle.CreateQmanagersRequiredMessage_idComponent}"/>
+                    <h:outputLabel value="#{bundle.CreateQmanagersLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{qmanagersController.selected.name}" title="#{bundle.CreateQmanagersTitle_name}" required="true" requiredMessage="#{bundle.CreateQmanagersRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.CreateQmanagersLabel_purpose}" for="purpose" />
+                    <h:inputText id="purpose" value="#{qmanagersController.selected.purpose}" title="#{bundle.CreateQmanagersTitle_purpose}" />
+                    <h:outputLabel value="#{bundle.CreateQmanagersLabel_components}" for="components" />
+                    <h:selectOneMenu id="components" value="#{qmanagersController.selected.components}" title="#{bundle.CreateQmanagersTitle_components}" required="true" requiredMessage="#{bundle.CreateQmanagersRequiredMessage_components}">
+                        <f:selectItems value="#{componentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateQmanagersLabel_primaryHost}" for="primaryHost" />
+                    <h:selectOneMenu id="primaryHost" value="#{qmanagersController.selected.primaryHost}" title="#{bundle.CreateQmanagersTitle_primaryHost}" >
+                        <f:selectItems value="#{saashostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateQmanagersLabel_failoverHost}" for="failoverHost" />
+                    <h:selectOneMenu id="failoverHost" value="#{qmanagersController.selected.failoverHost}" title="#{bundle.CreateQmanagersTitle_failoverHost}" >
+                        <f:selectItems value="#{saashostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{qmanagersController.create}" value="#{bundle.CreateQmanagersSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{qmanagersController.prepareList}" value="#{bundle.CreateQmanagersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateQmanagersIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

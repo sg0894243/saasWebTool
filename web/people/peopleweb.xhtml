@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPeopleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <br/>
+            <h:form id="form" styleClass="jsfcrud_list_form">
+                <p:growl id="growl" showDetail="true"/>
+                <p:dataTable id="emps" var="emp" value="#{peopleController.items}" rowKey="#{emp.idEmployee}" editable="True"
+                             selection="#{peopleController.selectedEmployee}" selectionMode="single" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:ajax event="rowSelect" listener="#{peopleController.onRowSelect}"  update=":form:growl,:form:emps,:form:newPersonDiag"/>
+                    <p:ajax event="rowUnselect" listener="#{peopleController.onRowUnselect}"  update=":form:growl,:form:emps,:form:emps"/> 
+                    <f:facet name="header">
+                        <p:commandButton value="Refresh" icon="ui-icon-refresh" update=":form:emps"
+                                         actionListener="#{peopleController.prepareList()}"/>
+                        <p:commandButton value="Add" icon="ui-icon-circle-plus" update=":form:newPersonDiag"
+                                         actionListener="#{peopleController.prepareCreate()}" oncomplete="createDialog.show()"/>
+                        <p:commandButton value="Edit" icon="ui-icon-pencil" update=":form:newPersonDiag,:form:growl"
+                                         actionListener="#{peopleController.prepareEdit()}" oncomplete="createDialog.show()" 
+                                         disabled="#{peopleController.noRowSelected}" />
+                    </f:facet>
+
+                    <p:column headerText="#{bundle.ListPeopleTitle_idEmployee}" sortBy="#{emp.idEmployee}" filterBy="#{emp.idEmployee}">
+                        #{emp.idEmployee}
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPeopleTitle_name}" sortBy="#{emp.name}">
+                        #{emp.name}
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPeopleTitle_role}" sortBy="#{emp.role}">  
+                        #{emp.role}
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListPeopleTitle_email}">  
+                        #{emp.email}
+                    </p:column>
+                </p:dataTable>
+
+                <p:dialog id="newPersonDiag" header="Employee details" dynamic="true" modal="true" widgetVar="createDialog" height="180" width="450" resizable="false">
+                    <p:panelGrid columns="2" id="panelNewEmp">
+                        <h:outputLabel for="ID" value="ID:"/>
+                        <p:inputText id="ID" value="#{peopleController.selectedEmployee.idEmployee}" required="true" requiredMessage="Employee ID is required" style="width:200px"/>
+                        <h:outputLabel for="Name" value="Name:"/>
+                        <p:inputText id="Name" value="#{peopleController.selectedEmployee.name}" required="true" label="Name" style="width:200px" requiredMessage="Employee name is required"/>
+                        <h:outputLabel for="Email" value="Email:"/>
+                        <p:inputText id="Email" value="#{peopleController.selectedEmployee.email}" label="Email" style="width:200px" validatorMessage="Invalid email address" required="True" requiredMessage="Email address is required">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                        </p:inputText>
+                    </p:panelGrid>
+                    <f:facet name="footer">
+                        <p:commandButton value="Update" actionListener="#{peopleController.update()}"
+                                         update=":form:growl,:form:emps" oncomplete=":form:remoteCmdCloseDialog" rendered="#{peopleController.isForEditing}"/>
+                        <p:commandButton value="Create" actionListener="#{peopleController.create()}"
+                                         update=":form:growl,:form:emps" oncomplete=":form:remoteCmdCloseDialog" rendered="#{peopleController.isForCreating}"/>
+                        <p:commandButton value="Close" update="newPersonDiag,:form:growl,:form:emps" immediate="true" oncomplete=":form:remoteCmdCloseDialog"/>
+                    </f:facet>
+                </p:dialog>
+                <p:remoteCommand id="remoteCmdCloseDialog" actionListener="#{peopleController.prepareList()}" update=":form:growl,:form:emps" oncomplete="createDialog.hide()"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

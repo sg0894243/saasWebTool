@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSoftwareTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSoftwareLabel_idSoftware}"/>
+                    <h:outputText value="#{softwareController.selected.idSoftware}" title="#{bundle.ViewSoftwareTitle_idSoftware}"/>
+                    <h:outputText value="#{bundle.ViewSoftwareLabel_name}"/>
+                    <h:outputText value="#{softwareController.selected.name}" title="#{bundle.ViewSoftwareTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewSoftwareLabel_description}"/>
+                    <h:outputText value="#{softwareController.selected.description}" title="#{bundle.ViewSoftwareTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewSoftwareLabel_version}"/>
+                    <h:outputText value="#{softwareController.selected.version}" title="#{bundle.ViewSoftwareTitle_version}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{softwareController.destroyAndView}" value="#{bundle.ViewSoftwareDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSoftwareEditLink}"/>
+                <br />
+                <h:commandLink action="#{softwareController.prepareCreate}" value="#{bundle.ViewSoftwareCreateLink}" />
+                <br />
+                <h:commandLink action="#{softwareController.prepareList}" value="#{bundle.ViewSoftwareShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSoftwareIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
