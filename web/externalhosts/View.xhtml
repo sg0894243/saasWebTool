@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewExternalhostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewExternalhostsLabel_extCompId}"/>
+                    <h:outputText value="#{externalhostsController.selected.extCompId}" title="#{bundle.ViewExternalhostsTitle_extCompId}"/>
+                    <h:outputText value="#{bundle.ViewExternalhostsLabel_location}"/>
+                    <h:outputText value="#{externalhostsController.selected.location}" title="#{bundle.ViewExternalhostsTitle_location}"/>
+                    <h:outputText value="#{bundle.ViewExternalhostsLabel_env}"/>
+                    <h:outputText value="#{externalhostsController.selected.env}" title="#{bundle.ViewExternalhostsTitle_env}"/>
+                    <h:outputText value="#{bundle.ViewExternalhostsLabel_components}"/>
+                    <h:outputText value="#{externalhostsController.selected.components}" title="#{bundle.ViewExternalhostsTitle_components}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{externalhostsController.destroyAndView}" value="#{bundle.ViewExternalhostsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewExternalhostsEditLink}"/>
+                <br />
+                <h:commandLink action="#{externalhostsController.prepareCreate}" value="#{bundle.ViewExternalhostsCreateLink}" />
+                <br />
+                <h:commandLink action="#{externalhostsController.prepareList}" value="#{bundle.ViewExternalhostsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewExternalhostsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

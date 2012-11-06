@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListBigiphostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListBigiphostsEmpty}" rendered="#{bigiphostsController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{bigiphostsController.items.rowCount > 0}">
+                    <h:outputText value="#{bigiphostsController.pagination.pageFirstItem + 1}..#{bigiphostsController.pagination.pageLastItem + 1}/#{bigiphostsController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{bigiphostsController.previous}" value="#{bundle.Previous} #{bigiphostsController.pagination.pageSize}" rendered="#{bigiphostsController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{bigiphostsController.next}" value="#{bundle.Next} #{bigiphostsController.pagination.pageSize}" rendered="#{bigiphostsController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{bigiphostsController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_bigIPHostname}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.bigIPHostname}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_env}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.env}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_tier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_primaryIP}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.primaryIP}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_standbyIP}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.standbyIP}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_primaryDNS}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.primaryDNS}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_standbyDNS}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.standbyDNS}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBigiphostsTitle_bigIPHostscol}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.bigIPHostscol}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{bigiphostsController.prepareView}" value="#{bundle.ListBigiphostsViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bigiphostsController.prepareEdit}" value="#{bundle.ListBigiphostsEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bigiphostsController.destroy}" value="#{bundle.ListBigiphostsDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{bigiphostsController.prepareCreate}" value="#{bundle.ListBigiphostsCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListBigiphostsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

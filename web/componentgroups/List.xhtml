@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListComponentgroupsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListComponentgroupsEmpty}" rendered="#{componentgroupsController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{componentgroupsController.items.rowCount > 0}">
+                    <h:outputText value="#{componentgroupsController.pagination.pageFirstItem + 1}..#{componentgroupsController.pagination.pageLastItem + 1}/#{componentgroupsController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{componentgroupsController.previous}" value="#{bundle.Previous} #{componentgroupsController.pagination.pageSize}" rendered="#{componentgroupsController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{componentgroupsController.next}" value="#{bundle.Next} #{componentgroupsController.pagination.pageSize}" rendered="#{componentgroupsController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{componentgroupsController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListComponentgroupsTitle_compGroupId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.compGroupId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListComponentgroupsTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListComponentgroupsTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListComponentgroupsTitle_protocol}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.protocol}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{componentgroupsController.prepareView}" value="#{bundle.ListComponentgroupsViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{componentgroupsController.prepareEdit}" value="#{bundle.ListComponentgroupsEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{componentgroupsController.destroy}" value="#{bundle.ListComponentgroupsDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{componentgroupsController.prepareCreate}" value="#{bundle.ListComponentgroupsCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListComponentgroupsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

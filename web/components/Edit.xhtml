@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditComponentsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_compId}" for="compId" />
+                    <h:inputText id="compId" value="#{componentsController.selected.compId}" title="#{bundle.EditComponentsTitle_compId}" required="true" requiredMessage="#{bundle.EditComponentsRequiredMessage_compId}"/>
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_dns}" for="dns" />
+                    <h:inputText id="dns" value="#{componentsController.selected.dns}" title="#{bundle.EditComponentsTitle_dns}" />
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_listeningIP}" for="listeningIP" />
+                    <h:inputText id="listeningIP" value="#{componentsController.selected.listeningIP}" title="#{bundle.EditComponentsTitle_listeningIP}" />
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_port}" for="port" />
+                    <h:inputText id="port" value="#{componentsController.selected.port}" title="#{bundle.EditComponentsTitle_port}" />
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_status}" for="status" />
+                    <h:inputText id="status" value="#{componentsController.selected.status}" title="#{bundle.EditComponentsTitle_status}" />
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_componentscol}" for="componentscol" />
+                    <h:inputText id="componentscol" value="#{componentsController.selected.componentscol}" title="#{bundle.EditComponentsTitle_componentscol}" />
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_externalhosts}" for="externalhosts" />
+                    <h:selectOneMenu id="externalhosts" value="#{componentsController.selected.externalhosts}" title="#{bundle.EditComponentsTitle_externalhosts}" >
+                        <f:selectItems value="#{externalhostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_appservers}" for="appservers" />
+                    <h:selectOneMenu id="appservers" value="#{componentsController.selected.appservers}" title="#{bundle.EditComponentsTitle_appservers}" >
+                        <f:selectItems value="#{appserversController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_qmanagers}" for="qmanagers" />
+                    <h:selectOneMenu id="qmanagers" value="#{componentsController.selected.qmanagers}" title="#{bundle.EditComponentsTitle_qmanagers}" >
+                        <f:selectItems value="#{qmanagersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_dbs}" for="dbs" />
+                    <h:selectOneMenu id="dbs" value="#{componentsController.selected.dbs}" title="#{bundle.EditComponentsTitle_dbs}" >
+                        <f:selectItems value="#{dbsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_compGroup}" for="compGroup" />
+                    <h:selectOneMenu id="compGroup" value="#{componentsController.selected.compGroup}" title="#{bundle.EditComponentsTitle_compGroup}" required="true" requiredMessage="#{bundle.EditComponentsRequiredMessage_compGroup}">
+                        <f:selectItems value="#{componentgroupsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditComponentsLabel_project}" for="project" />
+                    <h:selectOneMenu id="project" value="#{componentsController.selected.project}" title="#{bundle.EditComponentsTitle_project}" required="true" requiredMessage="#{bundle.EditComponentsRequiredMessage_project}">
+                        <f:selectItems value="#{projectsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{componentsController.update}" value="#{bundle.EditComponentsSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditComponentsViewLink}"/>
+                <br />
+                <h:commandLink action="#{componentsController.prepareList}" value="#{bundle.EditComponentsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditComponentsIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

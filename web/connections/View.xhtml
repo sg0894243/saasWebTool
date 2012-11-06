@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewConnectionsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewConnectionsLabel_idConnection}"/>
+                    <h:outputText value="#{connectionsController.selected.idConnection}" title="#{bundle.ViewConnectionsTitle_idConnection}"/>
+                    <h:outputText value="#{bundle.ViewConnectionsLabel_type}"/>
+                    <h:outputText value="#{connectionsController.selected.type}" title="#{bundle.ViewConnectionsTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewConnectionsLabel_source}"/>
+                    <h:outputText value="#{connectionsController.selected.source}" title="#{bundle.ViewConnectionsTitle_source}"/>
+                    <h:outputText value="#{bundle.ViewConnectionsLabel_idProject}"/>
+                    <h:outputText value="#{connectionsController.selected.idProject}" title="#{bundle.ViewConnectionsTitle_idProject}"/>
+                    <h:outputText value="#{bundle.ViewConnectionsLabel_destination}"/>
+                    <h:outputText value="#{connectionsController.selected.destination}" title="#{bundle.ViewConnectionsTitle_destination}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{connectionsController.destroyAndView}" value="#{bundle.ViewConnectionsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewConnectionsEditLink}"/>
+                <br />
+                <h:commandLink action="#{connectionsController.prepareCreate}" value="#{bundle.ViewConnectionsCreateLink}" />
+                <br />
+                <h:commandLink action="#{connectionsController.prepareList}" value="#{bundle.ViewConnectionsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewConnectionsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

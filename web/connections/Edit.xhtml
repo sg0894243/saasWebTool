@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditConnectionsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditConnectionsLabel_idConnection}" for="idConnection" />
+                    <h:inputText id="idConnection" value="#{connectionsController.selected.idConnection}" title="#{bundle.EditConnectionsTitle_idConnection}" required="true" requiredMessage="#{bundle.EditConnectionsRequiredMessage_idConnection}"/>
+                    <h:outputLabel value="#{bundle.EditConnectionsLabel_type}" for="type" />
+                    <h:inputText id="type" value="#{connectionsController.selected.type}" title="#{bundle.EditConnectionsTitle_type}" />
+                    <h:outputLabel value="#{bundle.EditConnectionsLabel_source}" for="source" />
+                    <h:selectOneMenu id="source" value="#{connectionsController.selected.source}" title="#{bundle.EditConnectionsTitle_source}" required="true" requiredMessage="#{bundle.EditConnectionsRequiredMessage_source}">
+                        <f:selectItems value="#{componentgroupsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditConnectionsLabel_idProject}" for="idProject" />
+                    <h:selectOneMenu id="idProject" value="#{connectionsController.selected.idProject}" title="#{bundle.EditConnectionsTitle_idProject}" >
+                        <f:selectItems value="#{projectsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditConnectionsLabel_destination}" for="destination" />
+                    <h:selectOneMenu id="destination" value="#{connectionsController.selected.destination}" title="#{bundle.EditConnectionsTitle_destination}" required="true" requiredMessage="#{bundle.EditConnectionsRequiredMessage_destination}">
+                        <f:selectItems value="#{componentgroupsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{connectionsController.update}" value="#{bundle.EditConnectionsSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditConnectionsViewLink}"/>
+                <br />
+                <h:commandLink action="#{connectionsController.prepareList}" value="#{bundle.EditConnectionsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditConnectionsIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

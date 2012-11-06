@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDbsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_dbCompId}" for="dbCompId" />
+                    <h:inputText id="dbCompId" value="#{dbsController.selected.dbCompId}" title="#{bundle.CreateDbsTitle_dbCompId}" required="true" requiredMessage="#{bundle.CreateDbsRequiredMessage_dbCompId}"/>
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_DBname}" for="DBname" />
+                    <h:inputText id="DBname" value="#{dbsController.selected.DBname}" title="#{bundle.CreateDbsTitle_DBname}" required="true" requiredMessage="#{bundle.CreateDbsRequiredMessage_DBname}"/>
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_type}" for="type" />
+                    <h:inputText id="type" value="#{dbsController.selected.type}" title="#{bundle.CreateDbsTitle_type}" required="true" requiredMessage="#{bundle.CreateDbsRequiredMessage_type}"/>
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_size}" for="size" />
+                    <h:inputText id="size" value="#{dbsController.selected.size}" title="#{bundle.CreateDbsTitle_size}" />
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_charset}" for="charset" />
+                    <h:inputText id="charset" value="#{dbsController.selected.charset}" title="#{bundle.CreateDbsTitle_charset}" />
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_DBscol}" for="DBscol" />
+                    <h:inputText id="DBscol" value="#{dbsController.selected.DBscol}" title="#{bundle.CreateDbsTitle_DBscol}" />
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_failoverHost}" for="failoverHost" />
+                    <h:selectOneMenu id="failoverHost" value="#{dbsController.selected.failoverHost}" title="#{bundle.CreateDbsTitle_failoverHost}" required="true" requiredMessage="#{bundle.CreateDbsRequiredMessage_failoverHost}">
+                        <f:selectItems value="#{saashostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_primaryHost}" for="primaryHost" />
+                    <h:selectOneMenu id="primaryHost" value="#{dbsController.selected.primaryHost}" title="#{bundle.CreateDbsTitle_primaryHost}" required="true" requiredMessage="#{bundle.CreateDbsRequiredMessage_primaryHost}">
+                        <f:selectItems value="#{saashostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateDbsLabel_components}" for="components" />
+                    <h:selectOneMenu id="components" value="#{dbsController.selected.components}" title="#{bundle.CreateDbsTitle_components}" required="true" requiredMessage="#{bundle.CreateDbsRequiredMessage_components}">
+                        <f:selectItems value="#{componentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{dbsController.create}" value="#{bundle.CreateDbsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{dbsController.prepareList}" value="#{bundle.CreateDbsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDbsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

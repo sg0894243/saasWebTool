@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewAppserversTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewAppserversLabel_appCompId}"/>
+                    <h:outputText value="#{appserversController.selected.appCompId}" title="#{bundle.ViewAppserversTitle_appCompId}"/>
+                    <h:outputText value="#{bundle.ViewAppserversLabel_type}"/>
+                    <h:outputText value="#{appserversController.selected.type}" title="#{bundle.ViewAppserversTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewAppserversLabel_owner}"/>
+                    <h:outputText value="#{appserversController.selected.owner}" title="#{bundle.ViewAppserversTitle_owner}"/>
+                    <h:outputText value="#{bundle.ViewAppserversLabel_storage}"/>
+                    <h:outputText value="#{appserversController.selected.storage}" title="#{bundle.ViewAppserversTitle_storage}"/>
+                    <h:outputText value="#{bundle.ViewAppserversLabel_requiredRAM}"/>
+                    <h:outputText value="#{appserversController.selected.requiredRAM}" title="#{bundle.ViewAppserversTitle_requiredRAM}"/>
+                    <h:outputText value="#{bundle.ViewAppserversLabel_host}"/>
+                    <h:outputText value="#{appserversController.selected.host}" title="#{bundle.ViewAppserversTitle_host}"/>
+                    <h:outputText value="#{bundle.ViewAppserversLabel_components}"/>
+                    <h:outputText value="#{appserversController.selected.components}" title="#{bundle.ViewAppserversTitle_components}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{appserversController.destroyAndView}" value="#{bundle.ViewAppserversDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewAppserversEditLink}"/>
+                <br />
+                <h:commandLink action="#{appserversController.prepareCreate}" value="#{bundle.ViewAppserversCreateLink}" />
+                <br />
+                <h:commandLink action="#{appserversController.prepareList}" value="#{bundle.ViewAppserversShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewAppserversIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewBigiphostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_bigIPHostname}"/>
+                    <h:outputText value="#{bigiphostsController.selected.bigIPHostname}" title="#{bundle.ViewBigiphostsTitle_bigIPHostname}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_env}"/>
+                    <h:outputText value="#{bigiphostsController.selected.env}" title="#{bundle.ViewBigiphostsTitle_env}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_tier}"/>
+                    <h:outputText value="#{bigiphostsController.selected.tier}" title="#{bundle.ViewBigiphostsTitle_tier}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_primaryIP}"/>
+                    <h:outputText value="#{bigiphostsController.selected.primaryIP}" title="#{bundle.ViewBigiphostsTitle_primaryIP}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_standbyIP}"/>
+                    <h:outputText value="#{bigiphostsController.selected.standbyIP}" title="#{bundle.ViewBigiphostsTitle_standbyIP}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_primaryDNS}"/>
+                    <h:outputText value="#{bigiphostsController.selected.primaryDNS}" title="#{bundle.ViewBigiphostsTitle_primaryDNS}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_standbyDNS}"/>
+                    <h:outputText value="#{bigiphostsController.selected.standbyDNS}" title="#{bundle.ViewBigiphostsTitle_standbyDNS}"/>
+                    <h:outputText value="#{bundle.ViewBigiphostsLabel_bigIPHostscol}"/>
+                    <h:outputText value="#{bigiphostsController.selected.bigIPHostscol}" title="#{bundle.ViewBigiphostsTitle_bigIPHostscol}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{bigiphostsController.destroyAndView}" value="#{bundle.ViewBigiphostsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewBigiphostsEditLink}"/>
+                <br />
+                <h:commandLink action="#{bigiphostsController.prepareCreate}" value="#{bundle.ViewBigiphostsCreateLink}" />
+                <br />
+                <h:commandLink action="#{bigiphostsController.prepareList}" value="#{bundle.ViewBigiphostsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewBigiphostsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditAppserversTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_appCompId}" for="appCompId" />
+                    <h:inputText id="appCompId" value="#{appserversController.selected.appCompId}" title="#{bundle.EditAppserversTitle_appCompId}" required="true" requiredMessage="#{bundle.EditAppserversRequiredMessage_appCompId}"/>
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_type}" for="type" />
+                    <h:inputText id="type" value="#{appserversController.selected.type}" title="#{bundle.EditAppserversTitle_type}" required="true" requiredMessage="#{bundle.EditAppserversRequiredMessage_type}"/>
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_owner}" for="owner" />
+                    <h:inputText id="owner" value="#{appserversController.selected.owner}" title="#{bundle.EditAppserversTitle_owner}" />
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_storage}" for="storage" />
+                    <h:inputText id="storage" value="#{appserversController.selected.storage}" title="#{bundle.EditAppserversTitle_storage}" />
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_requiredRAM}" for="requiredRAM" />
+                    <h:inputText id="requiredRAM" value="#{appserversController.selected.requiredRAM}" title="#{bundle.EditAppserversTitle_requiredRAM}" />
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_host}" for="host" />
+                    <h:selectOneMenu id="host" value="#{appserversController.selected.host}" title="#{bundle.EditAppserversTitle_host}" required="true" requiredMessage="#{bundle.EditAppserversRequiredMessage_host}">
+                        <f:selectItems value="#{saashostsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditAppserversLabel_components}" for="components" />
+                    <h:selectOneMenu id="components" value="#{appserversController.selected.components}" title="#{bundle.EditAppserversTitle_components}" required="true" requiredMessage="#{bundle.EditAppserversRequiredMessage_components}">
+                        <f:selectItems value="#{componentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{appserversController.update}" value="#{bundle.EditAppserversSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditAppserversViewLink}"/>
+                <br />
+                <h:commandLink action="#{appserversController.prepareList}" value="#{bundle.EditAppserversShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditAppserversIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

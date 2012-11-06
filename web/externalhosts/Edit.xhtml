@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditExternalhostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditExternalhostsLabel_extCompId}" for="extCompId" />
+                    <h:inputText id="extCompId" value="#{externalhostsController.selected.extCompId}" title="#{bundle.EditExternalhostsTitle_extCompId}" required="true" requiredMessage="#{bundle.EditExternalhostsRequiredMessage_extCompId}"/>
+                    <h:outputLabel value="#{bundle.EditExternalhostsLabel_location}" for="location" />
+                    <h:inputText id="location" value="#{externalhostsController.selected.location}" title="#{bundle.EditExternalhostsTitle_location}" required="true" requiredMessage="#{bundle.EditExternalhostsRequiredMessage_location}"/>
+                    <h:outputLabel value="#{bundle.EditExternalhostsLabel_env}" for="env" />
+                    <h:inputText id="env" value="#{externalhostsController.selected.env}" title="#{bundle.EditExternalhostsTitle_env}" />
+                    <h:outputLabel value="#{bundle.EditExternalhostsLabel_components}" for="components" />
+                    <h:selectOneMenu id="components" value="#{externalhostsController.selected.components}" title="#{bundle.EditExternalhostsTitle_components}" required="true" requiredMessage="#{bundle.EditExternalhostsRequiredMessage_components}">
+                        <f:selectItems value="#{componentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{externalhostsController.update}" value="#{bundle.EditExternalhostsSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditExternalhostsViewLink}"/>
+                <br />
+                <h:commandLink action="#{externalhostsController.prepareList}" value="#{bundle.EditExternalhostsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditExternalhostsIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

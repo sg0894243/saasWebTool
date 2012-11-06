@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListAppserversTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListAppserversEmpty}" rendered="#{appserversController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{appserversController.items.rowCount > 0}">
+                    <h:outputText value="#{appserversController.pagination.pageFirstItem + 1}..#{appserversController.pagination.pageLastItem + 1}/#{appserversController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{appserversController.previous}" value="#{bundle.Previous} #{appserversController.pagination.pageSize}" rendered="#{appserversController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{appserversController.next}" value="#{bundle.Next} #{appserversController.pagination.pageSize}" rendered="#{appserversController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{appserversController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_appCompId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.appCompId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_type}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.type}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_owner}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.owner}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_storage}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.storage}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_requiredRAM}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.requiredRAM}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_host}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.host}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAppserversTitle_components}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.components}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{appserversController.prepareView}" value="#{bundle.ListAppserversViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{appserversController.prepareEdit}" value="#{bundle.ListAppserversEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{appserversController.destroy}" value="#{bundle.ListAppserversDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{appserversController.prepareCreate}" value="#{bundle.ListAppserversCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListAppserversIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

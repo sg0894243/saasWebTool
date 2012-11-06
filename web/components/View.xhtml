@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewComponentsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewComponentsLabel_compId}"/>
+                    <h:outputText value="#{componentsController.selected.compId}" title="#{bundle.ViewComponentsTitle_compId}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_dns}"/>
+                    <h:outputText value="#{componentsController.selected.dns}" title="#{bundle.ViewComponentsTitle_dns}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_listeningIP}"/>
+                    <h:outputText value="#{componentsController.selected.listeningIP}" title="#{bundle.ViewComponentsTitle_listeningIP}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_port}"/>
+                    <h:outputText value="#{componentsController.selected.port}" title="#{bundle.ViewComponentsTitle_port}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_status}"/>
+                    <h:outputText value="#{componentsController.selected.status}" title="#{bundle.ViewComponentsTitle_status}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_componentscol}"/>
+                    <h:outputText value="#{componentsController.selected.componentscol}" title="#{bundle.ViewComponentsTitle_componentscol}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_externalhosts}"/>
+                    <h:outputText value="#{componentsController.selected.externalhosts}" title="#{bundle.ViewComponentsTitle_externalhosts}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_appservers}"/>
+                    <h:outputText value="#{componentsController.selected.appservers}" title="#{bundle.ViewComponentsTitle_appservers}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_qmanagers}"/>
+                    <h:outputText value="#{componentsController.selected.qmanagers}" title="#{bundle.ViewComponentsTitle_qmanagers}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_dbs}"/>
+                    <h:outputText value="#{componentsController.selected.dbs}" title="#{bundle.ViewComponentsTitle_dbs}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_compGroup}"/>
+                    <h:outputText value="#{componentsController.selected.compGroup}" title="#{bundle.ViewComponentsTitle_compGroup}"/>
+                    <h:outputText value="#{bundle.ViewComponentsLabel_project}"/>
+                    <h:outputText value="#{componentsController.selected.project}" title="#{bundle.ViewComponentsTitle_project}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{componentsController.destroyAndView}" value="#{bundle.ViewComponentsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewComponentsEditLink}"/>
+                <br />
+                <h:commandLink action="#{componentsController.prepareCreate}" value="#{bundle.ViewComponentsCreateLink}" />
+                <br />
+                <h:commandLink action="#{componentsController.prepareList}" value="#{bundle.ViewComponentsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewComponentsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

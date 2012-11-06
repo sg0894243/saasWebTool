@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateBigiphostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_bigIPHostname}" for="bigIPHostname" />
+                    <h:inputText id="bigIPHostname" value="#{bigiphostsController.selected.bigIPHostname}" title="#{bundle.CreateBigiphostsTitle_bigIPHostname}" required="true" requiredMessage="#{bundle.CreateBigiphostsRequiredMessage_bigIPHostname}"/>
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_env}" for="env" />
+                    <h:inputText id="env" value="#{bigiphostsController.selected.env}" title="#{bundle.CreateBigiphostsTitle_env}" />
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_tier}" for="tier" />
+                    <h:inputText id="tier" value="#{bigiphostsController.selected.tier}" title="#{bundle.CreateBigiphostsTitle_tier}" />
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_primaryIP}" for="primaryIP" />
+                    <h:inputText id="primaryIP" value="#{bigiphostsController.selected.primaryIP}" title="#{bundle.CreateBigiphostsTitle_primaryIP}" />
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_standbyIP}" for="standbyIP" />
+                    <h:inputText id="standbyIP" value="#{bigiphostsController.selected.standbyIP}" title="#{bundle.CreateBigiphostsTitle_standbyIP}" />
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_primaryDNS}" for="primaryDNS" />
+                    <h:inputText id="primaryDNS" value="#{bigiphostsController.selected.primaryDNS}" title="#{bundle.CreateBigiphostsTitle_primaryDNS}" />
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_standbyDNS}" for="standbyDNS" />
+                    <h:inputText id="standbyDNS" value="#{bigiphostsController.selected.standbyDNS}" title="#{bundle.CreateBigiphostsTitle_standbyDNS}" />
+                    <h:outputLabel value="#{bundle.CreateBigiphostsLabel_bigIPHostscol}" for="bigIPHostscol" />
+                    <h:inputText id="bigIPHostscol" value="#{bigiphostsController.selected.bigIPHostscol}" title="#{bundle.CreateBigiphostsTitle_bigIPHostscol}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{bigiphostsController.create}" value="#{bundle.CreateBigiphostsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{bigiphostsController.prepareList}" value="#{bundle.CreateBigiphostsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateBigiphostsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

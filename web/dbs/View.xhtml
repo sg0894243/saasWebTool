@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewDbsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewDbsLabel_dbCompId}"/>
+                    <h:outputText value="#{dbsController.selected.dbCompId}" title="#{bundle.ViewDbsTitle_dbCompId}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_DBname}"/>
+                    <h:outputText value="#{dbsController.selected.DBname}" title="#{bundle.ViewDbsTitle_DBname}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_type}"/>
+                    <h:outputText value="#{dbsController.selected.type}" title="#{bundle.ViewDbsTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_size}"/>
+                    <h:outputText value="#{dbsController.selected.size}" title="#{bundle.ViewDbsTitle_size}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_charset}"/>
+                    <h:outputText value="#{dbsController.selected.charset}" title="#{bundle.ViewDbsTitle_charset}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_DBscol}"/>
+                    <h:outputText value="#{dbsController.selected.DBscol}" title="#{bundle.ViewDbsTitle_DBscol}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_failoverHost}"/>
+                    <h:outputText value="#{dbsController.selected.failoverHost}" title="#{bundle.ViewDbsTitle_failoverHost}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_primaryHost}"/>
+                    <h:outputText value="#{dbsController.selected.primaryHost}" title="#{bundle.ViewDbsTitle_primaryHost}"/>
+                    <h:outputText value="#{bundle.ViewDbsLabel_components}"/>
+                    <h:outputText value="#{dbsController.selected.components}" title="#{bundle.ViewDbsTitle_components}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{dbsController.destroyAndView}" value="#{bundle.ViewDbsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewDbsEditLink}"/>
+                <br />
+                <h:commandLink action="#{dbsController.prepareCreate}" value="#{bundle.ViewDbsCreateLink}" />
+                <br />
+                <h:commandLink action="#{dbsController.prepareList}" value="#{bundle.ViewDbsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewDbsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
