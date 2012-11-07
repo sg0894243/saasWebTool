@@ -27,7 +27,7 @@
                     <f:facet name="header">
                         <p:commandButton value="Refresh" icon="ui-icon-refresh" update=":form:emps"
                                          actionListener="#{peopleController.prepareList()}"/>
-                        <p:commandButton value="Add" icon="ui-icon-circle-plus" update=":form:newPersonDiag"
+                        <p:commandButton value="Add" icon="ui-icon-circle-plus" update=":form:newPersonDiag,:form:growl"
                                          actionListener="#{peopleController.prepareCreate()}" oncomplete="createDialog.show()"/>
                     </f:facet>
 
@@ -37,7 +37,7 @@
                                 <h:outputText value="#{emp.idEmployee}" />  
                             </f:facet>  
                             <f:facet name="input">  
-                                <p:inputText value="#{emp.idEmployee}" style="width:100%"/>  
+                                <p:inputText value="#{emp.idEmployee}" style="width:100%" required="true" requiredMessage="Employee ID is required"/>  
                             </f:facet>  
                         </p:cellEditor>  
                     </p:column>
@@ -47,7 +47,7 @@
                                 <h:outputText value="#{emp.name}" />  
                             </f:facet>  
                             <f:facet name="input">  
-                                <p:inputText value="#{emp.name}" style="width:100%"/>  
+                                <p:inputText value="#{emp.name}" style="width:100%" required="true" requiredMessage="Employee name is required"/>  
                             </f:facet>  
                         </p:cellEditor>
                     </p:column>
@@ -74,7 +74,9 @@
                                 <h:outputText value="#{emp.email}" />  
                             </f:facet>  
                             <f:facet name="input">  
-                                <p:inputText value="#{emp.email}" style="width:100%"/>  
+                                <p:inputText value="#{emp.email}" style="width:100%" validatorMessage="Invalid email address" required="true" requiredMessage="Email address is required">
+                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                                </p:inputText>  
                             </f:facet>  
                         </p:cellEditor>
                     </p:column>
@@ -89,6 +91,11 @@
                         <p:inputText id="ID" value="#{peopleController.selectedEmployee.idEmployee}" required="true" requiredMessage="Employee ID is required" style="width:200px"/>
                         <h:outputLabel for="Name" value="Name:"/>
                         <p:inputText id="Name" value="#{peopleController.selectedEmployee.name}" required="true" label="Name" style="width:200px" requiredMessage="Employee name is required"/>
+                        <h:outputLabel for="Role" value="Email:"/>
+                        <p:selectOneListbox id="Role" label="Role" value='#{peopleController.selectedEmployee.role}' style="width:200px">
+                            <f:selectItem itemLabel="Architect" itemValue="Architect" />
+                            <f:selectItem itemLabel="Project Manager" itemValue="Project Manager" />
+                        </p:selectOneListbox>
                         <h:outputLabel for="Email" value="Email:"/>
                         <p:inputText id="Email" value="#{peopleController.selectedEmployee.email}" label="Email" style="width:200px" validatorMessage="Invalid email address" required="True" requiredMessage="Email address is required">
                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
@@ -104,5 +111,4 @@
             </h:form>
         </ui:define>
     </ui:composition>
-
 </html>
