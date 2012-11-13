@@ -14,14 +14,14 @@
             <br/>
             <h:form id="form" styleClass="jsfcrud_list_form">
                 <p:growl id="growl" showDetail="true"/>
-                <p:contextMenu for="emps">  
-                    <p:menuitem value="Refresh" update="emps" icon="ui-icon-refresh" oncomplete="peopleController.prepareList()"/>  
-                    <p:menuitem value="Add" update="panelNewEmp" icon="ui-icon-circle-plus" actionListener="#{peopleController.prepareCreate()}" oncomplete="createDialog.show()"/>  
+                <p:contextMenu for="emps">
+                    <p:menuitem value="Refresh" update="emps" icon="ui-icon-refresh" oncomplete="peopleController.prepareList()"/>
+                    <p:menuitem value="Add" update="panelNewEmp" icon="ui-icon-circle-plus" actionListener="#{peopleController.prepareCreate()}" oncomplete="createDialog.show()"/>
                 </p:contextMenu>
                 <p:dataTable id="emps" var="emp" value="#{peopleController.items}" rowKey="#{emp.idEmployee}" editable="True"
                              paginator="true" rows="15"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             selectionMode="single">
+                             selectionMode="multiple" selection="#{peopleController.selectedEmployees}">
                     <p:ajax event="rowEdit" listener="#{peopleController.onEdit}" update=":form:growl" />
                     <p:ajax event="rowEditCancel" listener="#{peopleController.onCancel}" update=":form:growl" /> 
                     <f:facet name="header">
@@ -29,19 +29,14 @@
                                          actionListener="#{peopleController.prepareList()}"/>
                         <p:commandButton value="Add" icon="ui-icon-circle-plus" update=":form:newPersonDiag,:form:growl"
                                          actionListener="#{peopleController.prepareCreate()}" oncomplete="createDialog.show()"/>
+                        <p:commandButton value="Destroy!!!" icon="ui-icon-circle-minus" update=":form:emps"
+                                         oncomplete="confirmation.show()"/>
                     </f:facet>
 
-                    <p:column headerText="#{bundle.ListPeopleTitle_idEmployee}" sortBy="#{emp.idEmployee}" filterBy="#{emp.idEmployee}">
-                        <p:cellEditor>
-                            <f:facet name="output">  
-                                <h:outputText value="#{emp.idEmployee}" />  
-                            </f:facet>  
-                            <f:facet name="input">  
-                                <p:inputText value="#{emp.idEmployee}" style="width:100%" required="true" requiredMessage="Employee ID is required"/>  
-                            </f:facet>  
-                        </p:cellEditor>  
+                    <p:column headerText="#{bundle.ListPeopleTitle_idEmployee}" sortBy="#{emp.idEmployee}" filterBy="#{emp.idEmployee}" filterMatchMode="contains">
+                        #{emp.idEmployee}
                     </p:column>
-                    <p:column headerText="#{bundle.ListPeopleTitle_name}" sortBy="#{emp.name}">
+                    <p:column headerText="#{bundle.ListPeopleTitle_name}" sortBy="#{emp.name}" filterBy="#{emp.name}" filterMatchMode="contains">
                         <p:cellEditor>  
                             <f:facet name="output">  
                                 <h:outputText value="#{emp.name}" />  
@@ -52,14 +47,14 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="#{bundle.ListPeopleTitle_role}" sortBy="#{emp.role}">  
-                        <p:cellEditor>  
+                    <p:column headerText="#{bundle.ListPeopleTitle_role}" sortBy="#{emp.role}" filterBy="#{emp.role}" filterMatchMode="exact" filterOptions="#{peopleController.colRoles}">
+                        <p:cellEditor>
                             <f:facet name="output">  
                                 <h:outputText value="#{emp.role}" />  
                             </f:facet>  
                             <f:facet name="input">  
                                 <h:selectOneMenu value="#{emp.role}" >  
-                                    <f:selectItems value="#{peopleController.roles}"  
+                                    <f:selectItems value="#{peopleController.colRoles}"  
                                                    var="role"   
                                                    itemLabel="#{role}"  
                                                    itemValue="#{role}" />  
@@ -85,6 +80,13 @@
                     </p:column>  
                 </p:dataTable>
 
+                <p:confirmDialog id="confirmDialog" message="Are you sure about destroying the world?"  
+                                 header="Initiating destroy process" severity="alert" widgetVar="confirmation">
+                    <p:commandButton id="confirm" value="Yes, sure" update=":form:growl,:form:emps" oncomplete="confirmation.hide()"  
+                                     actionListener="#{peopleController.destroyAndView()}" />  
+                    <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button"/>
+                </p:confirmDialog>  
+                
                 <p:dialog id="newPersonDiag" header="Employee details" dynamic="true" modal="true" widgetVar="createDialog" height="180" width="450" resizable="false">
                     <p:panelGrid columns="2" id="panelNewEmp">
                         <h:outputLabel for="ID" value="ID:"/>
