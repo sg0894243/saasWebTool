@@ -52,6 +52,16 @@ public class PeopleController implements Serializable {
     private List<SelectItem> colRoles;
     private List<ColumnModel> columns = new ArrayList<ColumnModel>();
 
+    public PeopleController() {
+        noRowSelected = true;
+        selectedEmployee = null;
+        colRoles = null;
+        mngBean_ID = JsfUtil.getNextInt();
+        isForEditing = false;
+        logger.log(Level.INFO, "[{0}" + "] " + "Initializing the Bean PeopleController with new ID", mngBean_ID);
+        createDynamicColumns();
+    }
+
     public People[] getSelectedEmployees() {
         return selectedEmployees;
     }
@@ -169,16 +179,6 @@ public class PeopleController implements Serializable {
 
     public boolean getIsForCreating() {
         return !isForEditing;
-    }
-
-    public PeopleController() {
-        noRowSelected = true;
-        selectedEmployee = null;
-        colRoles = null;
-        mngBean_ID = JsfUtil.getNextInt();
-        isForEditing = false;
-        logger.log(Level.INFO, "[{0}" + "] " + "Initializing the Bean with new ID", mngBean_ID);
-        createDynamicColumns();
     }
 
     public People getSelected() {
