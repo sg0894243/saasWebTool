@@ -1,6 +1,7 @@
 package saasmgr.controller.util;
 
 import java.util.List;
+import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -9,6 +10,13 @@ import javax.faces.model.SelectItem;
 
 public class JsfUtil {
 
+    private static Random random = new Random();
+    
+    public static int getNextInt()
+    {
+        return random.nextInt();
+    }
+    
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();
         SelectItem[] items = new SelectItem[size];
