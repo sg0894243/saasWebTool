@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+        <!-- INTERFACE -->
+        <cc:interface>
+            <cc:attribute name="managedBean"/>
+        </cc:interface>
+
+        <!-- IMPLEMENTATION -->
+        <cc:implementation>
+            <h:form id="form" styleClass="jsfcrud_list_form">
+                <p:growl id="growl" showDetail="true"/>
+                <p:dataTable id="items" var="item" value="#{cc.attrs.managedBean.items}">
+                    <p:columns value="#{cc.attrs.managedBean.columns}" var="column" columnIndexVar="colIndex"
+                               sortBy="#{item[column.property]}" filterBy="#{item[column.property]}">  
+                        <f:facet name="header">
+                            #{column.header}
+                        </f:facet>  
+
+                        #{car[column.property]}  
+                    </p:columns>  
+                </p:dataTable>
+            </h:form>
+        </cc:implementation>
+    </h:body>
+</html>

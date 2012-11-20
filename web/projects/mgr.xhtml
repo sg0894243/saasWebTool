@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListProjectsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <br/>
+            <h:form id="form" styleClass="jsfcrud_list_form">
+                <p:growl id="growl" showDetail="true"/>
+                <p:dataTable id="maindt" var="item" value="#{projectsController.items}" rowKey="#{item.projectId}" editable="True"
+                             paginator="true" rows="15"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             selectionMode="multiple" selection="#{projectsController.selectedItems}">
+                    <p:ajax event="rowEdit" listener="#{projectsController.onEdit}" update=":form:growl" />
+                    <p:ajax event="rowEditCancel" listener="#{projectsController.onCancel}" update=":form:growl" /> 
+                    <f:facet name="header">
+                        <p:commandButton value="Refresh" icon="ui-icon-refresh" update=":form:maindt"
+                                         actionListener="#{projectsController.prepareList()}"/>
+                        <p:commandButton value="Add" icon="ui-icon-circle-plus" update=":form:newItemDiag,:form:growl"
+                                         actionListener="#{projectsController.prepareCreate()}" oncomplete="createDialog.show()"/>
+                        <p:commandButton value="Destroy!!!" icon="ui-icon-circle-minus" update=":form:maindt"
+                                         oncomplete="confirmation.show()"/>
+                    </f:facet>
+
+                    <p:column headerText="#{bundle.ListProjectsTitle_projectId}" sortBy="#{item.projectId}" filterBy="#{item.projectId}" filterMatchMode="contains">
+                        <p:cellEditor>  
+                            <f:facet name="output">
+                                <h:outputText value="#{item.projectId}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="#{bundle.EditProjectsTitle_type}" sortBy="#{item.type}" filterBy="#{item.type}" filterMatchMode="contains">
+                        <p:cellEditor>  
+                            <f:facet name="output">
+                                <h:outputText value="#{item.type}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{item.type}" style="width:100%" required="true" requiredMessage="Project type is required"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListProjectsTitle_env}">  
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{item.env}" />
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <h:selectOneMenu value="#{item.env}" >  
+                                    <f:selectItems value="#{projectsController.colEnvs}"  
+                                                   var="selectOption"
+                                                   itemLabel="#{selectOption.label}"  
+                                                   itemValue="#{selectOption.value}" />  
+                                </h:selectOneMenu>
+                            </f:facet>  
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Options" style="width:50px">  
+                        <p:rowEditor />  
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog id="confirmDialog" message="Are you sure about destroying the world?"  
+                                 header="Initiating destroy process" severity="alert" widgetVar="confirmation">
+                    <p:commandButton id="confirm" value="Yes, sure" update=":form:growl,:form:maindt" oncomplete="confirmation.hide()"  
+                                     actionListener="#{projectsController.destroyAndView()}" />  
+                    <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button"/>
+                </p:confirmDialog>  
+                
+                <p:dialog id="newItemDiag" header="Item details" dynamic="true" modal="true" widgetVar="createDialog" height="220" width="450" resizable="false">
+                    <p:panelGrid columns="2" id="panelNewEmp">
+                        <h:outputLabel for="Type" value="Project Type:"/>
+                        <p:inputText id="Type" value="#{projectsController.selected.type}" required="true" label="Type" style="width:200px" requiredMessage="Project Type is required"/>
+                        <h:outputLabel for="Env" value="Environment:"/>
+                        <h:selectOneMenu id="Env" value="#{projectsController.selected.env}">  
+                            <f:selectItem itemLabel="Select One" itemValue="" />  
+                            <f:selectItems value="#{projectsController.colEnvs}" />  
+                        </h:selectOneMenu> 
+                        <h:outputLabel for="SR" value="Parent SR:"/>
+                        <p:inputText id="SR" value="#{projectsController.selected.parentSR}" required="true" label="Type" style="width:200px" requiredMessage="Parent SR is required"/>
+                        <h:outputLabel for="Ready" value="Ready date:"/>
+                        <p:calendar id="Ready" value="#{projectsController.selected.envReadyDate}" pattern="d/M/yyyy"/>
+                        <h:outputLabel for="Cut" value="Cutover date:"/>
+                        <p:calendar id="Cut" value="#{projectsController.selected.cutoverDate}" pattern="d/M/yyyy"/>
+                        <h:outputLabel for="Status" value="Status:"/>
+                        <p:inputText id="Status" value="#{projectsController.selected.status}" style="width:200px"/>
+                        <h:outputLabel for="PM" value="Primary PM:"/>
+                        <h:selectOneMenu id="PM" value="#{projectsController.selected.primaryPM}">  
+                            <f:selectItem itemLabel="Select One" itemValue="" />  
+                            <f:selectItems value="#{peopleController.items}" var="n"
+                                           itemValue="#{n.idEmployee}"
+                                           itemLabel="#{n.name}"
+                                           itemDescription="#{n.name}"
+                                           itemLabelEscaped="true"/> 
+                        </h:selectOneMenu>
+                    </p:panelGrid>
+                    <f:facet name="footer">
+                        <p:commandButton value="Create" actionListener="#{projectsController.create()}"
+                                         update="growl,:form:maindt,panelNewEmp" onsuccess=":form:remoteCmdCloseDialog"/>
+                        <p:commandButton value="Close" update="newItemDiag,:form:growl,:form:maindt" immediate="true" oncomplete=":form:remoteCmdCloseDialog"/>
+                    </f:facet>
+                </p:dialog>
+                <p:remoteCommand id="remoteCmdCloseDialog" actionListener="#{projectsController.prepareList()}" update=":form:growl,:form:maindt" oncomplete="createDialog.hide()"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

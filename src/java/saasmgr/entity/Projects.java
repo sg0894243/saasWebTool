@@ -57,7 +57,7 @@ public class Projects implements Serializable {
     @Column(name = "Type")
     private String type;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 45)
     @Column(name = "Env")
     private String env;

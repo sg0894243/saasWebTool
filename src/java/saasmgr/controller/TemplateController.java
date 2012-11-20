@@ -1,84 +1,62 @@
 package saasmgr.controller;
-
-import saasmgr.entity.Customers;
 import saasmgr.controller.util.JsfUtil;
 import saasmgr.controller.util.PaginationHelper;
-import saasmgr.dao.CustomersFacade;
+import saasmgr.dao.AbstractFacade;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.primefaces.event.RowEditEvent;
 
-@Named("customersController")
-@SessionScoped
-public class CustomersController implements Serializable {
+public abstract class TemplateController {
 
-    private Customers current;
+    protected Object current;
     private DataModel items = null;
-    @EJB
-    private saasmgr.dao.CustomersFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private Customers[] selectedItems;
-    private static final Logger logger = Logger.getLogger(
-            "saasmgr.controller.peopleController");
-    private int mngBean_ID;
-    private List<SelectItem> colRegions;    
+    private Object[] selectedItems;
+    protected int mngBean_ID;
+    protected static Logger logger;
+    private String beanName;
             
 
-    public CustomersController() {
+    public TemplateController(String loggerName, String beanName) {
+        this.beanName = beanName;
         mngBean_ID = JsfUtil.getNextInt();
-        colRegions = null;
-        logger.log(Level.INFO, "[{0}" + "] " + "Initializing the Bean CustomersController with new ID", mngBean_ID);
+        logger = Logger.getLogger(loggerName);
+        logger.log(Level.INFO, "[{0}" + "] " + "Initializing the "+beanName+"Controller Bean with new ID", mngBean_ID);
     }
+    
+    public TemplateController() {
+        this.beanName = "Projects";
+        mngBean_ID = JsfUtil.getNextInt();
+        logger = Logger.getLogger("saasmgr.controller.templateController");
+        logger.log(Level.INFO, "[{0}" + "] " + "Initializing a Controller Bean with new ID", mngBean_ID);
+    }
+    
+    protected abstract Object getNewObject();
 
-    public Customers[] getSelectedItems() {
+    public Object[] getSelectedItems() {
         return selectedItems;
     }
 
-    public void setSelectedItems(Customers[] selectedItems) {
+    public void setSelectedItems(Object[] selectedItems) {
         this.selectedItems = selectedItems;
     }
-    
-    public List<SelectItem> getColRegions() {
-        if (colRegions == null) {
-            colRegions = new ArrayList<SelectItem>();
-            colRegions.add(new SelectItem("", "Select"));
-            String[] regions = {"North America","South and Central America","Europe, Africa and Asia"};
-            for (int i = 0; i < regions.length; i++) {
-                logger.info(regions[i]);
-                colRegions.add(new SelectItem(regions[i]));
-            }
+
+    public Object getSelected(){
+     if (current == null) {
+            current = getNewObject();
         }
-        return colRegions;
+        return current;   
     }
 
-    public Customers getSelected() {
-        if (current == null) {
-            current = new Customers();
-            selectedItemIndex = -1;
-        }
-        return current;
-    }
-
-    private CustomersFacade getFacade() {
-        return ejbFacade;
-    }
+    protected abstract AbstractFacade getFacade();
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
@@ -104,21 +82,22 @@ public class CustomersController implements Serializable {
 
     public void prepareView() {
         logger.log(Level.INFO, "[{0}" + "] " + "prepareView being called", mngBean_ID);
-        current = (Customers) getItems().getRowData();
+        current = getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
     }
 
-    public void prepareCreate() {
+    public void prepareCreate()
+    {
         logger.log(Level.INFO, "[{0}" + "] " + "prepareCreate being called", mngBean_ID);
-        current = new Customers();
-        selectedItemIndex = -1;
+        current = getNewObject();
+        //current.setEnv("Int");
     }
 
     public void create() {
         try {
             getFacade().create(current);
             prepareList();
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(beanName + "Created"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -126,22 +105,20 @@ public class CustomersController implements Serializable {
 
     public void prepareEdit() {
         logger.log(Level.INFO, "[{0}" + "] " + "prepareEdit being called", mngBean_ID);
-        current = (Customers) getItems().getRowData();
+        current = getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
     }
 
     public void update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(beanName + "Updated"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
     public void destroy() {
-        current = (Customers) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         recreateModel();
@@ -156,11 +133,11 @@ public class CustomersController implements Serializable {
 
     private void performDestroy() {
         try {
-            for (Customers c : selectedItems) {
-                logger.log(Level.INFO, "[{0}" + "] " + "performDestroy being called for item " + c.getCustomerCode(), mngBean_ID);
-                getFacade().remove(c);
+            for (Object o : selectedItems) {
+                logger.log(Level.INFO, "[{0}" + "] " + "performDestroy being called for one item", mngBean_ID);
+                getFacade().remove(o);
             }
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(beanName + "Deleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -209,17 +186,17 @@ public class CustomersController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return JsfUtil.getSelectItems(getFacade().findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(getFacade().findAll(), true);
     }
 
     public void onEdit(RowEditEvent event) {
         try {
             logger.log(Level.INFO, "[{0}" + "] " + "onEdit being called", mngBean_ID);
-            getFacade().edit((Customers) event.getObject());
+            getFacade().edit(event.getObject());
 
             //return "View";
         } catch (Exception e) {
@@ -233,45 +210,8 @@ public class CustomersController implements Serializable {
     }
 
     public void onCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Customer Cancelled", (((Customers) event.getObject()).getCustomerCode()).toString());
+        FacesMessage msg = new FacesMessage("Customer Cancelled");
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    @FacesConverter(forClass = Customers.class)
-    public static class CustomersControllerConverter implements Converter {
-
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            CustomersController controller = (CustomersController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "customersController");
-            return controller.ejbFacade.find(getKey(value));
-        }
-
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
-            return key;
-        }
-
-        String getStringKey(java.lang.String value) {
-            StringBuffer sb = new StringBuffer();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Customers) {
-                Customers o = (Customers) object;
-                return getStringKey(o.getCustomerCode());
-            } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Customers.class.getName());
-            }
-        }
     }
 }
